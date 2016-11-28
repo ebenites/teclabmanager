@@ -1,0 +1,14 @@
+{
+  "name": "smartupdater",
+  "_cacheHeaders": {
+    "ETag": "\"86096362019f336909c0c5a49a8d7c6a67608c88\"",
+    "Content-Length": "2541",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:860963620",
+  "main": "index.js",
+  "_source": "https://github.com/vkiryukhin/Smartupdater/raw/master/smartupdater.js",
+  "_target": "*",
+  "_originalSource": "https://github.com/vkiryukhin/Smartupdater/raw/master/smartupdater.js",
+  "_direct": true
+}

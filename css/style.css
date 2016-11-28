@@ -1,0 +1,156 @@
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+/*h1, h2, h3, h4, h5, h6, h7{*/
+/*    color: #00B6B5;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*p, div, span{*/
+/*    color: #888B8D;*/
+/*}*/
+
+
+/* Navbar */
+
+.navbar-brand {
+    padding: 10px;
+}
+
+.navbar-brand>img{
+    height: 100%;
+}
+
+.special-img {
+    position: relative;
+    top: -5px;
+    float: left;
+ 
+    left: -5px;
+}
+.profile-image {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+    height: 500px;
+    margin-bottom: 20px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+    z-index: 10;
+    text-shadow: none;
+}
+.carousel-caption > h1{
+    text-shadow: 1px 1px 2px rgba(0, 182, 181,.5);
+}
+.carousel-caption > p{
+  font-size: 22px;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+    height: 500px;
+}
+.carousel-inner > .item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 500px;
+    
+    opacity: 0.3;
+}
+
+/* CUSTOMIZE THE NAV-TABS
+-------------------------------------------------- */
+.nav-tabs { border-bottom: 2px solid #ddd; display: table; margin: auto;}
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+    .nav-tabs > li > a { border: none; color: #888B8D; text-transform: uppercase; }
+        .nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #00B6B5 !important; background: transparent; }
+        .nav-tabs > li > a::after { content: ""; background: #00B6B5; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+    .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+.tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+.tab-pane { padding: 0; }
+.tab-content{padding:20px}
+
+.nav-tabs > li.disable > a, .nav-tabs > li.disable > a:hover { pointer-events: none; color: #ccc; }
+.nav-tabs > li.disable > a::after, .nav-tabs > li.disable:hover > a::after { transform: scale(0); }
+
+.card {background: #FFF none repeat scroll 0% 0%; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3); margin-bottom: 30px; }
+
+
+/* CUSTOMIZE THE PANELS
+-------------------------------------------------- */
+.panel-module {
+    cursor: pointer;
+    
+    border: 1px solid #ddd;
+    padding: 3px;
+    margin-bottom: 15px;
+}
+.panel-module > header > h3 {
+    position: absolute;
+    text-align: center;
+    left: 18px;
+    right: 18px;
+    margin: 0;
+    line-height: 40px;
+    top: 80px;
+    
+    color: #fff;
+    font-size: x-large;
+    /*text-shadow: 1px 1px 2px rgba(0, 0, 0,.5);*/
+    
+    z-index: 1;
+}
+.panel-module > header > img{
+    min-width: 100%;
+    height: 200px;
+    
+    transition: all 250ms ease 0s;
+}
+.panel-module > header > h3::after{
+    content: "";
+    background: rgba(0, 182, 181,.5);
+    -webkit-filter: blur(1px);
+    filter: blur(1px);
+    
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 40px;
+    margin-top: -40px;
+    z-index: -1;
+    
+    transition: all 250ms ease 0s;
+    
+}
+.panel-module:hover > header > h3::after{
+    background: rgba(0, 182, 181,.75);
+    
+}
+.panel-module:hover > header > img{
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+}
+.panel-module > footer{
+    overflow: hidden;
+    background-color: #F4F4F4;
+}
+.panel-module > footer > p{
+    margin: 10px;
+    padding: 0px;
+    text-align: justify;
+    font-size: 12px;
+    font-style: italic;
+    height: 52px;
+    overflow: hidden;
+}

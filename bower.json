@@ -1,0 +1,35 @@
+{
+  "name": "teclabmanager",
+  "authors": [
+    "Erick Benites Cuenca <erick.benites@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "bootstrap-toggle": "^2.2.2",
+    "bootbox.js": "^4.4.0",
+    "bootstrap-fileinput": "^4.3.5",
+    "jquery-colorbox": "colorbox#^1.6.4",
+    "spin.js": "^2.3.2",
+    "tipso": "^1.0.8",
+    "animate.css": "^3.5.2",
+    "fullcalendar": "^3.0.1",
+    "fullcalendar-scheduler": "^1.4.0",
+    "smartupdater": "https://github.com/vkiryukhin/Smartupdater/raw/master/smartupdater.js",
+    "qtip2": "^2.2.1",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.43"
+  }
+}
