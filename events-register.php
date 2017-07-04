@@ -8,6 +8,7 @@ $event->title = $_POST['title'];
 $event->start = $_POST['start'];
 $event->end = $_POST['end'];
 
+
 EventsDAO::register($event);
 
 Flash::success('Reserva registrada satisfactoriamente');
