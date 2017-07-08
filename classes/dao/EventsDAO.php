@@ -50,6 +50,61 @@ class EventsDAO {
         return $lista;
     }
     
+    public static function validarDisponibilidad($rooms_id, $start, $end) {
+        
+        $con = Connection::getConnection();
+        
+        
+        $sql = "select * 
+                from events 
+                where state=1 and rooms_id=:rooms_id 
+                and (
+                    STR_TO_DATE(:start, '%Y-%m-%dT%H:%i') between STR_TO_DATE(start, '%Y-%m-%dT%H:%i') and STR_TO_DATE(end, '%Y-%m-%dT%H:%i') 
+                    or 
+                    STR_TO_DATE(:end, '%Y-%m-%dT%H:%i') between STR_TO_DATE(start, '%Y-%m-%dT%H:%i') and STR_TO_DATE(end, '%Y-%m-%dT%H:%i')
+                )";
+                
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':rooms_id', $rooms_id);
+        $stmt->bindParam(':start', $start);
+        $stmt->bindParam(':end', $end);
+        $stmt->execute();
+        
+        if($registro = $stmt->fetchObject('Event')){
+            return $registro;
+        }
+
+        return null;
+    }
+    
+    public static function validarAcceso($code, $rom) {
+        
+        date_default_timezone_set('America/Lima');
+        $date = date('Y-m-d H:i');
+        
+        $con = Connection::getConnection();
+        
+        $sql = "SELECT e.id, e.title, e.start, e.end, e.rooms_id, r.name AS rooms_name, e.users_id, u.fullname AS users_fullname, u.code AS user_code,state
+            FROM events e
+            INNER JOIN rooms r ON r.id = e.rooms_id
+            INNER JOIN users u ON u.id = e.users_id
+            WHERE u.code = :code
+            AND r.name = :room
+            and STR_TO_DATE(:date, '%Y-%m-%d %H:%i') between STR_TO_DATE(start, '%Y-%m-%dT%H:%i') and STR_TO_DATE(end, '%Y-%m-%dT%H:%i') ";
+                
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':code', $code);
+        $stmt->bindParam(':room', $rom);
+        $stmt->bindParam(':date', $date);
+        $stmt->execute();
+        
+        if($registro = $stmt->fetchObject('Event')){
+            return $registro;
+        }
+
+        return null;
+    }
+    
     public static function register($event) {
         
         $con = Connection::getConnection();

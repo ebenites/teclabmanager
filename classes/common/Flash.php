@@ -26,12 +26,23 @@ class Flash {
         $_SESSION[Flash::FLASH_ALERT_DANGER] = $message;
     }
 
-    public static function show(){
-        if (!isset($_SESSION)) session_start();
-        
-        if (isset($_SESSION[Flash::FLASH_ALERT_SUCCESS])) {
-            echo '<div class="alert '.Flash::FLASH_ALERT_SUCCESS.'">'.$_SESSION[Flash::FLASH_ALERT_SUCCESS].'</div>';
-            unset($_SESSION[Flash::FLASH_ALERT_SUCCESS]);
+    public static function show() {
+        if(!isset($_SESSION)) session_start();
+        if(isset($_SESSION[self::FLASH_ALERT_SUCCESS])){
+            echo '<div class="alert '.self::FLASH_ALERT_SUCCESS.'">'.$_SESSION[self::FLASH_ALERT_SUCCESS].'</div>';
+            unset($_SESSION[self::FLASH_ALERT_SUCCESS]);
+        }
+        if(isset($_SESSION[self::FLASH_ALERT_INFO])){
+            echo '<div class="alert '.self::FLASH_ALERT_INFO.'">'.$_SESSION[self::FLASH_ALERT_INFO].'</div>';
+            unset($_SESSION[self::FLASH_ALERT_INFO]);
+        }
+        if(isset($_SESSION[self::FLASH_ALERT_WARNING])){
+            echo '<div class="alert '.self::FLASH_ALERT_WARNING.'">'.$_SESSION[self::FLASH_ALERT_WARNING].'</div>';
+            unset($_SESSION[self::FLASH_ALERT_WARNING]);
+        }
+        if(isset($_SESSION[self::FLASH_ALERT_DANGER])){
+            echo '<div class="alert '.self::FLASH_ALERT_DANGER.'">'.$_SESSION[self::FLASH_ALERT_DANGER].'</div>';
+            unset($_SESSION[self::FLASH_ALERT_DANGER]);
         }
     }
 

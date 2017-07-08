@@ -48,46 +48,7 @@ require_once 'autoload.php';
 </head>
 <body>
     
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="img/logo.svg"></img></a>
-            </div>
-    
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Niveles</a></li>
-                    <li><a href="#">Alertas</a></li>
-                </ul>
-                
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <img src="http://lorempixel.com/32/32/people" width="32" height="32" class="img-circle special-img"> Luis Bueno <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Mis datos</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="logout">Salir</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
+    <?php require_once './includes/header.php'; ?>
     
     <div class="container-fluid">
         
@@ -106,15 +67,15 @@ require_once 'autoload.php';
                 
                 <?php Flash::show() ?>
                 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Reserva de Laboratorio</div>
-                    <div class="panel-body">
-                        
-                        <form action="events-register.php" method="post">
+                <form action="events-register.php" method="post">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Reserva de Laboratorio</div>
+                        <div class="panel-body">
+                            
                             <div class="form-group">
                                 <label for="users_id">Usuario</label>
-                                <input type="text" id="users_id" class="form-control" value="Luis Bueno" readonly />
-                                <input type="hidden" name="users_id" value="1" />
+                                <input type="text" id="users_id" class="form-control" value="<?=$_SESSION['usuario']->fullname?>" readonly />
+                                <input type="hidden" name="users_id" value="<?=$_SESSION['usuario']->id?>" />
                             </div>
                             <div class="form-group">
                                 <label for="title">T&iacute;tulo</label>
@@ -144,11 +105,13 @@ require_once 'autoload.php';
                                     </span>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="panel-footer">
                             <input type="submit" value="Reservar" class="btn btn-primary"/>
-                        </form>
-                        
+                        </div>
                     </div>
-                </div>
+                </form>
                 
             </div>
         </div>

@@ -1,5 +1,6 @@
 <?php
 require_once 'autoload.php';
+require_once 'includes/security.php';
 
 $eventos = EventsDAO::tolistPendientes();
 
@@ -15,22 +16,7 @@ $eventos = EventsDAO::tolistPendientes();
     
     <body>
         
-        <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="img/Control-TecLabs.png"></a>
-            </div>
-                
-        </div>
-        <!-- /.container-fluid -->
-        </nav>
+        <?php require_once './includes/header.php'; ?>
         
         <div class="container-fluid wrapper">
             
@@ -65,7 +51,7 @@ $eventos = EventsDAO::tolistPendientes();
                             <td><?=$evento->start?></td>
                             <td><?=$evento->end?></td>
                             <td><a href="events-state.php?id=<?=$evento->id?>&state=1" class="btn btn-success">Aceptar</a></td>
-                            <td><a href=="events-state.php?id=<?=$evento->id?>&state=2" class="btn btn-sm btn-danger">Rechazar</a></td>
+                            <td><a href="events-state.php?id=<?=$evento->id?>&state=2" class="btn btn-danger">Rechazar</a></td>
                         </tr>  
                         <?php } ?> 
                     </tbody>

@@ -2,32 +2,76 @@
 
 class UsuarioDAO {
 
-    public static function validar($username, $password) {
+    public static function validar($username, $userpass) {
         
-        $query = "SELECT * FROM usuarios WHERE username=:username and password=:password";
+        $query = "SELECT * FROM users WHERE username=:username and userpass=:userpass";
         
-        $con = Conexion::getConexion();
+        $con = Connection::getConnection();
         $stmt = $con->prepare($query);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':userpass', $userpass);
         $stmt->execute();
 
-        if($fila = $stmt->fetchObject('Usuario')){
+        if($fila = $stmt->fetchObject('User')){
             return $fila;
         }
         return NULL;
     }
     
-    public static function listar() {
+    public static function validarCodigo($code, $dni) {
+        
+        $query = "SELECT * FROM users WHERE code=:code and dni=:dni";
+        
+        $con = Connection::getConnection();
+        $stmt = $con->prepare($query);
+        $stmt->bindParam(':code', $code);
+        $stmt->bindParam(':dni', $dni);
+        $stmt->execute();
+
+        if($fila = $stmt->fetchObject('User')){
+            return $fila;
+        }
+        return NULL;
+    }
+    
+    public static function listarAdministradores() {
         $lista = array();
-        $query = "SELECT u.id, u.username, u.password, u.nombres, u.roles_id, r.nombre AS roles_nombre, u.email FROM usuarios u 
-            LEFT JOIN roles r ON r.id=u.roles_id 
-            ORDER BY nombres";
-        $con = Conexion::getConexion() ;
+        $query = "SELECT id, username, fullname, code, dni, email, rol FROM users WHERE rol='A' ORDER BY fullname";
+        $con = Connection::getConnection();
         $stmt = $con->prepare($query);
         $stmt->execute();
 
-        while($objeto = $stmt->fetchObject('Usuario')){
+        while($objeto = $stmt->fetchObject('User')){
+            $lista[] = $objeto;
+        }
+
+        return $lista;
+    }
+    
+    public static function listarNoAdministradores() {
+        $lista = array();
+        $query = "SELECT id, username, fullname, code, dni, email, rol FROM users WHERE rol='E' or rol='P' ORDER BY fullname";
+        $con = Connection::getConnection();
+        $stmt = $con->prepare($query);
+        $stmt->execute();
+
+        while($objeto = $stmt->fetchObject('User')){
+            $lista[] = $objeto;
+        }
+
+        return $lista;
+    }
+    
+    public static function listar() {
+        $lista = array();
+        $query = "SELECT u.id, u.username, u.password, u.nombres, u.roles_id, r.nombre AS roles_nombre, u.email FROM users u 
+            LEFT JOIN roles r ON r.id=u.roles_id 
+            ORDER BY nombres";
+        $con = Connection::getConnection();
+        $stmt = $con->prepare($query);
+        $stmt->execute();
+
+        while($objeto = $stmt->fetchObject('User')){
             $lista[] = $objeto;
         }
 
