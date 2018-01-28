@@ -21,12 +21,14 @@
                             
                             <ul class="dropdown-menu">
                                 <?php if($_SESSION['usuario']->rol == 'A'){ ?>
+                                    <li><a href="reportes.php">Reportes Antiguo</a></li>
+                                    <li><a href="dashboard.php">Reportes</a></li>
                                     <li><a href="reservas.php">Pendientes</a></li>
                                 <?php } ?>
                                 <li><a href="events-new.php">Nuevo</a></li>
                             </ul>
                             
-                        </li>
+                    </li>
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right">

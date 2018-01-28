@@ -27,6 +27,135 @@ class EventsDAO {
         return $lista;
     }
     
+    public static function cantidadReservas(){
+       
+        $con = Connection::getConnection();
+        
+        $sql = "select count(rooms_id) as numero_reservas, rooms_id as salones
+                from events 
+                where state =  '1'
+                group by rooms_id";
+
+        $stmt = $con->prepare($sql);
+        $stmt->execute();
+        
+        $lista = array();
+        while($registro = $stmt->fetchObject('Event')){
+            $lista[] = $registro;
+        }
+
+        return $lista;
+                
+    }
+    
+    public static function cantidadUso(){
+       
+        $con = Connection::getConnection();
+        
+        $sql = "select id, title, start, end, rooms_id, 
+                TIMESTAMPDIFF(MINUTE, start, end) as difference
+                from events where state='1' and start > '2018-01-22' and start < '2018-01-28'";
+
+        $stmt = $con->prepare($sql);
+        $stmt->execute();
+        
+        $lista = array();
+        while($registro = $stmt->fetchObject('Event')){
+            $lista[] = $registro;
+        }
+
+        return $lista;
+                
+    }
+    
+    public static function reporteUso($room_id, $start, $end){
+       
+        $start = $start."T00:00";
+        $end = $end."T23:59";
+       
+        $con = Connection::getConnection();
+        
+        $sql = "select id, title, start, end from events where state='1' and rooms_id=:rooms_id and STR_TO_DATE(start, '%Y-%m-%dT%H:%i') > STR_TO_DATE(:start, '%Y-%m-%dT%H:%i') and STR_TO_DATE(start, '%Y-%m-%dT%H:%i') < STR_TO_DATE(:end, '%Y-%m-%dT%H:%i') order by start";
+
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':rooms_id', $room_id);
+        $stmt->bindParam(':start', $start);
+        $stmt->bindParam(':end', $end);
+        $stmt->execute();
+        
+        $eventos = array();
+        while($registro = $stmt->fetchObject('Event')){
+            $registro->startDate = new DateTime($registro->start);
+            $registro->endDate = new DateTime($registro->end);
+            $eventos[$registro->startDate->format('Y-m-d')][] = $registro;    // agrupar los eventos por día
+        }
+        //var_dump($eventos);
+
+        $reporte['total'] = 0;
+        $reporte['total-uso'] = 0;
+        $reporte['total-desuso'] = 0;
+        $reporte['total-muerto'] = 0;
+        
+        $tiempoMinimoMuerto = 120;
+
+        $firstDay = new DateTime($start);
+        $endDay = new DateTime($end);
+        $endDay->add(new DateInterval("P1D"));
+        
+        //Calcular el total
+        $diasXsemana = $firstDay->diff($endDay)->d; // $endDay - $firstDay
+        $startHour = 8; // hora inicio del día
+        $endHour = 21; // hora fin del día
+        
+        $reporte['total'] = $diasXsemana*($endHour-$startHour)*60;;
+        
+        // Cálculo de uso, desuso y muerto
+        foreach($eventos as $dia => $listaXdia){
+            foreach($listaXdia as $i => $evento){
+                // Total de desuso o tiempo muerto
+                if($i==0){  // El primer evento del día
+                    $startDay = clone $evento->startDate;
+                    $startDay->setTime($startHour, 0);
+                    $diff = $startDay->diff($evento->startDate);
+                    $evento->minStartDiff = $diff->h*60 + $diff->i;
+                }else{  // El resto de eventos del día
+                    $diff = $listaXdia[$i-1]->endDate->diff($evento->startDate);
+                    $evento->minStartDiff = $diff->h*60 + $diff->i;
+                }
+                if($evento->minStartDiff < $tiempoMinimoMuerto){
+                    $reporte['total-muerto'] += $evento->minStartDiff;
+                }else{
+                    $reporte['total-desuso'] += $evento->minStartDiff;
+                }
+                if($i==count($listaXdia)-1){   // El último evento del día
+                    $endDay = clone $evento->endDate;
+                    $endDay->setTime($endHour, 0);
+                    $diff = $evento->endDate->diff($endDay);
+                    $evento->minEndDiff = $diff->h*60 + $diff->i;
+                    if($evento->minEndDiff < $tiempoMinimoMuerto){
+                        $reporte['total-muerto'] += $evento->minEndDiff;
+                    }else{
+                        $reporte['total-desuso'] += $evento->minEndDiff;
+                    }
+                }
+                // Total de uso
+                $diff = $evento->startDate->diff($evento->endDate);
+                $evento->rangeDiff = $diff->h*60 + $diff->i;
+                $reporte['total-uso'] += $evento->rangeDiff;
+            }
+        }
+
+        // Adicionando días que no existe eventos a la semana
+        $reporte['total-desuso'] += ($diasXsemana-count($eventos))*($endHour-$startHour)*60;
+
+        //var_dump($reporte);
+
+        return $reporte;
+                
+    }
+    
+    
+    
     public static function tolistPendientes() {
         
         $con = Connection::getConnection();
@@ -77,7 +206,7 @@ class EventsDAO {
         return null;
     }
     
-    public static function validarAcceso($code, $rom) {
+    public static function validarAcceso($code, $room) {
         
         date_default_timezone_set('America/Lima');
         $date = date('Y-m-d H:i');
@@ -94,7 +223,7 @@ class EventsDAO {
                 
         $stmt = $con->prepare($sql);
         $stmt->bindParam(':code', $code);
-        $stmt->bindParam(':room', $rom);
+        $stmt->bindParam(':room', $room);
         $stmt->bindParam(':date', $date);
         $stmt->execute();
         
@@ -135,5 +264,3 @@ class EventsDAO {
     }
     
 }
-
-?>

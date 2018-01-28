@@ -142,7 +142,7 @@ body {
     filter: blur(3px);
 }
 .panel-module > footer{
-    overflow: hidden;
+    overflow: auto;
     background-color: #F4F4F4;
 }
 .panel-module > footer > p{
@@ -152,6 +152,39 @@ body {
     font-size: 12px;
     font-style: italic;
     height: 52px;
-    overflow: hidden;
+    overflow: auto;
+}
+
+/** Punto pe **/
+
+html, body { 
+margin:0; padding:0; height:100%; /*overflow: auto;*/
+}
+
+.cuadrado { 
+position: relative; 
+width: 970px; 
+height: 600px; 
+background: #FFFFFF; 
+top: -715px; 
+left: 320px; 
+}
+
+.rectangulo { 
+position: relative; 
+width: 900px; 
+height: 75px; 
+background: #f2f2f2; 
+top: -1410px; 
+left: 500px; 
+} 
+
+
+.container {
+	width: 100%; padding: 0; margin: 0; 
+}
+
+iframe {
+	display:block; width:100%; border:none; height: 100%; padding:0; position: absolute; 
 }
 

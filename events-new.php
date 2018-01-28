@@ -85,6 +85,8 @@ require_once 'autoload.php';
                                 <label for="rooms_id">Laboratorios</label>
                                 <select name="rooms_id" id="rooms_id" class="form-control">
                                     <option value="701">701</option>
+                                    <option value="702">702</option>
+                                    <option value="703">703</option>
                                 </select>
                             </div>
                             <div class="form-group">

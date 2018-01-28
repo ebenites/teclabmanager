@@ -55,4 +55,7 @@
     
     <script src='bower_components/smartupdater/index.js'></script>
     
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.js"></script>
+    
     <link rel="stylesheet" href="css/style.css">

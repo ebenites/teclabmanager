@@ -30,6 +30,7 @@
     "fullcalendar-scheduler": "^1.4.0",
     "smartupdater": "https://github.com/vkiryukhin/Smartupdater/raw/master/smartupdater.js",
     "qtip2": "^2.2.1",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.43"
+    "eonasdan-bootstrap-datetimepicker": "^4.17.43",
+    "highcharts": "^6.0.4"
   }
 }
